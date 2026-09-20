@@ -3,7 +3,6 @@
 #include <SDL3/SDL.h>
 #include <cglm/types.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 int main() {
 
@@ -44,7 +43,7 @@ int main() {
 
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     // rendering the pixels
-    SDL_RenderPoints(renderer, pix, 8);
+    // SDL_RenderPoints(renderer, pix, 8);
 
     SDL_RenderLines(renderer, lines, 16);
 

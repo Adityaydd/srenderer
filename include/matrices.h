@@ -2,6 +2,7 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+#define PI 3.14159265358979323846f
 
 struct Vec3 {
   float x;
@@ -28,3 +29,5 @@ void constructProjectionMatrix(float fov, float np, float fp, float ar,
 
 void constructEyeMatrix(struct Vec3 eye, struct Vec3 target, struct Vec3 up,
                         float *viewMatrix);
+
+void constructRoatationMatY(float *RoatationMatY, float theta);

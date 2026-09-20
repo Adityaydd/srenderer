@@ -3,21 +3,34 @@
 #include <cglm/mat4.h>
 #include <cglm/types.h>
 
+void getRoatation(mat4 roat, float theta) {
+
+  constructRoatationMatY((float *)roat, theta);
+}
+
 void projectPoints(vec4 *worldPoints, SDL_FPoint *pix) {
   mat4 projec;
   mat4 view;
-  mat4 viewProj;
+  mat4 temp;
+  mat4 roat;
+  mat4 result;
+
+  float theta = 100.0f * (PI / 180.0f);
+
   vec4 clippedSpace[8];
 
   constructProjectionMatrix(fov, np, fp, ar, (float *)projec);
   constructEyeMatrix(eye, target, up, (float *)view);
+  getRoatation(roat, theta);
 
-  glm_mat4_mul(projec, view, viewProj);
+  glm_mat4_mul(projec, view, temp);
+  glm_mat4_mul(temp, roat, result);
 
   for (int i = 0; i < 8; i++) {
-    glm_mat4_mulv(viewProj, worldPoints[i], clippedSpace[i]);
+    glm_mat4_mulv(result, worldPoints[i], clippedSpace[i]);
   }
 
+  // to pixels
   for (int i = 0; i < 8; i++) {
     float invW = 1.0f / clippedSpace[i][3];
 
@@ -47,15 +60,25 @@ void fillLines(SDL_FPoint *pix, SDL_FPoint *lines) {
 //
 //   vec4 clippedSpace[8];
 //
-//   clipPoints(worldPoints, clippedSpace);
+//   mat4 roat;
+//   float theta = 60.0f * (PI / 180.0f);
 //
-//   for (int i = 0; i < 8; i++) {
-// printf("Point %d: (x: %8.3f, y: %8.3f, z: %8.3f, w: %8.3f)\n", i,
-//            clippedSpace[i][0],  // x
-//            clippedSpace[i][1],  // y
-//            clippedSpace[i][2],  // z
-//            clippedSpace[i][3]); // w
+//   constructRoatationMatY((float *)roat, theta);
+//   float *r = (float *)roat;
+//
+//   for (int i = 0; i < 16; i++) {
+//     printf("%f  ", r[i]);
 //   }
+//
+//   // clipPoints(worldPoints, clippedSpace);
+//
+//   //   for (int i = 0; i < 8; i++) {
+//   // printf("Point %d: (x: %8.3f, y: %8.3f, z: %8.3f, w: %8.3f)\n", i,
+//   //            clippedSpace[i][0],  // x
+//   //            clippedSpace[i][1],  // y
+//   //            clippedSpace[i][2],  // z
+//   //            clippedSpace[i][3]); // w
+//   //   }
 //
 //   return 0;
 // }

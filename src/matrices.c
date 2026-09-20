@@ -8,7 +8,6 @@ const struct Vec3 target = {0.0f, 0.0f, 0.0f};
 const struct Vec3 up = {0.0f, 1.0f, 0.0f};
 
 // projection values
-#define PI 3.14159265358979323846f
 float fov = 60.0f * (PI / 180.0f);
 float np = 0.1f;
 float fp = 100.0f;
@@ -41,4 +40,14 @@ void constructEyeMatrix(struct Vec3 eye, struct Vec3 target, struct Vec3 up,
   constructIdentityMatrix(viewMatrix);
 
   viewMatrix[14] = -eye.z;
+}
+
+void constructRoatationMatY(float *RoatationMatY, float theta) {
+
+  constructIdentityMatrix(RoatationMatY);
+
+  RoatationMatY[0] = cos(theta);
+  RoatationMatY[2] = sin(theta);
+  RoatationMatY[8] = -sin(theta);
+  RoatationMatY[10] = cos(theta);
 }

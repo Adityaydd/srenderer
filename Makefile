@@ -1,14 +1,14 @@
 # Compiler and flags
-CC      = gcc
-CFLAGS  = -Wall -Wextra -O2
-LDFLAGS = -lSDL3 -lcglm -lm
+CC       := gcc
+CFLAGS   := -Wall -Wextra -O2 -Iinclude
+LDFLAGS  := -lSDL3 -lcglm -lm
 
 # Source files, object files, and final output name
-SRCS    = main.c matrices.c utils.c
-OBJS    = $(SRCS:.c=.o)
-TARGET  = app
+SRCS     := src/main.c src/matrices.c src/utils.c
+OBJS     := $(SRCS:.c=.o)
+TARGET   := app
 
-# Default rule: runs when you just type 'make'
+# Default rule
 all: $(TARGET)
 
 # Link the compiled object files into the final executable
@@ -19,13 +19,12 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Run the program directly with 'make run'
+# Run the program directly
 run: $(TARGET)
 	./$(TARGET)
 
-# Delete object files and the executable
+# Clean compiled objects and the executable
 clean:
 	rm -f $(OBJS) $(TARGET)
 
-# Mark targets that aren't actual files
 .PHONY: all run clean
