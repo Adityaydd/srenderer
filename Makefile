@@ -1,11 +1,11 @@
-# Compiler and flags
 CC       := gcc
-CFLAGS   := -Wall -Wextra -O2 -Iinclude
+CFLAGS   := -Wall -Wextra -O2 -Iinclude -MMD -MP
 LDFLAGS  := -lSDL3 -lcglm -lm
 
-# Source files, object files, and final output name
+# Source files, object files, dependency files, and final output name
 SRCS     := src/main.c src/matrices.c src/utils.c
 OBJS     := $(SRCS:.c=.o)
+DEPS     := $(OBJS:.o=.d)
 TARGET   := app
 
 # Default rule
@@ -19,12 +19,15 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Include generated dependency rules (ignoring errors if they don't exist yet)
+-include $(DEPS)
+
 # Run the program directly
 run: $(TARGET)
 	./$(TARGET)
 
-# Clean compiled objects and the executable
+# Clean compiled objects, dependency files, and the executable
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(DEPS) $(TARGET)
 
 .PHONY: all run clean

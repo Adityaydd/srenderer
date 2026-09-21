@@ -3,9 +3,12 @@
 #include <cglm/mat4.h>
 #include <cglm/types.h>
 
-void getRoatation(mat4 roat, float theta) {
+float g_Yangle = 100.0f;
+void getRoatation(mat4 roat) {
 
+  float theta = g_Yangle * (PI / 180.0f);
   constructRoatationMatY((float *)roat, theta);
+  g_Yangle += 1.0f;
 }
 
 void projectPoints(vec4 *worldPoints, SDL_FPoint *pix) {
@@ -15,13 +18,11 @@ void projectPoints(vec4 *worldPoints, SDL_FPoint *pix) {
   mat4 roat;
   mat4 result;
 
-  float theta = 100.0f * (PI / 180.0f);
-
   vec4 clippedSpace[8];
 
   constructProjectionMatrix(fov, np, fp, ar, (float *)projec);
   constructEyeMatrix(eye, target, up, (float *)view);
-  getRoatation(roat, theta);
+  getRoatation(roat);
 
   glm_mat4_mul(projec, view, temp);
   glm_mat4_mul(temp, roat, result);

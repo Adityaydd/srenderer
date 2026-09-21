@@ -1,6 +1,7 @@
 # Compilation outputs and binaries
 *.o
 *.out
+*.d
 app
 bin/
 build/

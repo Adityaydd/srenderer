@@ -2,6 +2,8 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+#define TARGET_FPS 60
+#define TARGET_FRAME_NS (1000000000ULL / TARGET_FPS)
 #define PI 3.14159265358979323846f
 
 struct Vec3 {
@@ -9,6 +11,10 @@ struct Vec3 {
   float y;
   float z;
 };
+
+// roations angles
+
+extern float g_Yangle;
 
 // camera
 extern const struct Vec3 eye;

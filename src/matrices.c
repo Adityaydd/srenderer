@@ -47,7 +47,7 @@ void constructRoatationMatY(float *RoatationMatY, float theta) {
   constructIdentityMatrix(RoatationMatY);
 
   RoatationMatY[0] = cos(theta);
-  RoatationMatY[2] = sin(theta);
-  RoatationMatY[8] = -sin(theta);
+  RoatationMatY[2] = -sin(theta);
+  RoatationMatY[8] = sin(theta);
   RoatationMatY[10] = cos(theta);
 }
